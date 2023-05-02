@@ -9,6 +9,7 @@ class HomeController extends GetxController {
   final formKey = GlobalKey<FormState>();
   final editController = TextEditingController();
   final chipIndex = 0.obs;
+  final deleting = false.obs;
 
   HomeController({
     required this.taskRepository,
@@ -27,9 +28,17 @@ class HomeController extends GetxController {
     chipIndex.value = value;
   }
 
+  void setDeleting(bool value) {
+    deleting.value = value;
+  }
+
   bool addTask(Task task) {
     if (tasks.contains(task)) return false;
     tasks.add(task);
     return true;
+  }
+
+  void deleteTask(Task task) {
+    tasks.remove(task);
   }
 }
