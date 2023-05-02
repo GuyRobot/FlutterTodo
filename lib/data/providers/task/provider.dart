@@ -10,7 +10,7 @@ class TaskProvider {
   final StorageService storageService = Get.find<StorageService>();
 
   List<Task> readTasks() {
-    const tasks = <Task>[];
+    final tasks = <Task>[];
 
     jsonDecode(storageService.read(taskKey).toString())
         .forEach((item) => tasks.add(Task.fromJson(item)));
