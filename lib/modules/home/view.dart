@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:task_todo/core/utils/extensions.dart';
+import 'package:task_todo/modules/home/controller.dart';
 import 'package:task_todo/modules/home/widgets/add_card.dart';
+import 'package:task_todo/modules/home/widgets/task_card.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends GetView<HomeController> {
   const HomePage({Key? key}) : super(key: key);
 
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,6 +29,11 @@ class _HomePageState extends State<HomePage> {
               shrinkWrap: true,
               children: [
                 AddCard(),
+                ...controller.tasks
+                    .map(
+                      (element) => TaskCard(task: element),
+                    )
+                    .toList(),
               ],
             )
           ],
