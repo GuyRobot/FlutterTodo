@@ -93,6 +93,7 @@ class AddCard extends StatelessWidget {
                           homeController.addTask(task)
                               ? EasyLoading.showSuccess("Create task succeed")
                               : EasyLoading.showError("Failed to create task");
+                          Get.back();
                         }
                       },
                       child: const Text("Save"),
