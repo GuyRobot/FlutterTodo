@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:task_todo/data/services/storage/service.dart';
+import 'package:task_todo/modules/home/binding.dart';
 
 import 'modules/home/view.dart';
 
@@ -17,9 +18,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const GetMaterialApp(
+    return GetMaterialApp(
       title: 'Task Todo',
-      home: HomePage(),
+      home: const HomePage(),
+      initialBinding: HomeBinding(),
     );
   }
 }
