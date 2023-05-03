@@ -25,6 +25,7 @@ class MyApp extends StatelessWidget {
       initialRoute: "/",
       initialBinding: HomeBinding(),
       builder: EasyLoading.init(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
