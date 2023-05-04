@@ -10,6 +10,7 @@ class HomeController extends GetxController {
   final editController = TextEditingController();
   final chipIndex = 0.obs;
   final deleting = false.obs;
+  final tabIndex = 0.obs;
 
   HomeController({
     required this.taskRepository,
@@ -37,6 +38,10 @@ class HomeController extends GetxController {
 
   void setTask(Task? task) {
     this.task.value = task;
+  }
+
+  void setTaskIndex(int index) {
+    tabIndex.value = index;
   }
 
   bool addTask(Task task) {
@@ -95,5 +100,20 @@ class HomeController extends GetxController {
     task.value = newTask;
 
     task.refresh();
+  }
+
+  Map<String, int> tasksInfo() {
+    int total = 0;
+    int done = 0;
+    for (var element in tasks) {
+      element.todos?.forEach((todo) {
+        total++;
+        if (todo["done"] == true) {
+          done++;
+        }
+      });
+    }
+
+    return {"total": total, "done": done};
   }
 }
