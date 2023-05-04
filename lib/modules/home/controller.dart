@@ -17,6 +17,8 @@ class HomeController extends GetxController {
 
   final tasks = <Task>[].obs;
   final task = Rx<Task?>(null);
+  final doingTodos = <dynamic>[].obs;
+  final doneTodos = <dynamic>[].obs;
 
   @override
   void onInit() {
@@ -52,10 +54,46 @@ class HomeController extends GetxController {
     if (todos.any((element) => element['title'] == text)) {
       return false;
     }
-    todos.add({"title": text, "done": false});
-    final idx = tasks.indexOf(task);
-    tasks[idx] = task.copyWith(todos: todos);
-    tasks.refresh();
+    doingTodos.add({"title": text, "done": false});
+    doingTodos.refresh();
     return true;
+  }
+
+  void refreshTodos(Task task) {
+    doneTodos.clear();
+    doingTodos.clear();
+    task.todos?.forEach((element) {
+      if (element["done"] == true) {
+        doneTodos.add(element);
+      } else {
+        doingTodos.add(element);
+      }
+    });
+  }
+
+  void doneTodo(dynamic element) {
+    final idx =
+        doingTodos.indexWhere((todo) => todo["title"] == element["title"]);
+    doingTodos.removeAt(idx);
+    doneTodos.add({"title": element["title"], "done": true});
+    doingTodos.refresh();
+    doneTodos.refresh();
+  }
+
+  void deleteDoneTodo(dynamic element) {
+    final idx =
+        doneTodos.indexWhere((todo) => todo["title"] == element["title"]);
+    doneTodos.removeAt(idx);
+    doneTodos.refresh();
+  }
+
+  void updateTodos() {
+    final todos = [...doneTodos, ...doingTodos];
+    final Task newTask = task.value!.copyWith(todos: todos);
+    final taskIdx = tasks.indexOf(newTask);
+    tasks[taskIdx] = newTask;
+    task.value = newTask;
+
+    task.refresh();
   }
 }

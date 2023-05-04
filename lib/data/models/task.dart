@@ -1,5 +1,8 @@
+import 'dart:ui';
+
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:task_todo/core/utils/extensions.dart';
 
 part 'task.g.dart';
 
@@ -56,6 +59,24 @@ class Task extends Equatable {
 
   @override
   List<Object?> get props => [title, icon, color];
+
+  bool isTodosEmpty() {
+    return todos == null || todos?.isEmpty == true;
+  }
+
+  int numTodosDone() {
+    if (todos == null) return 0;
+    return todos!.where((element) => element["done"] == true).length;
+  }
+
+  int numTodos() {
+    if (todos == null) return 0;
+    return todos!.length;
+  }
+
+  Color getColor() {
+    return HexColor.fromHex(color);
+  }
 
 //</editor-fold>
 }
